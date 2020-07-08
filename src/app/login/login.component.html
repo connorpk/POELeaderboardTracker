@@ -1,0 +1,10 @@
+<p>login works!</p>
+<mat-form-field hintLabel="Max 20 characters" appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)] = "username" maxlength="20" placeholder="Username">
+  </mat-form-field>
+  <mat-form-field hintLabel="Max 10 characters" appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput [(ngModel)] = "password" maxlength="20" type="password" placeholder="Password">
+  </mat-form-field>
+  <button mat-raised-button (click)="login()">Login</button>

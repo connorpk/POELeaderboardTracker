@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button [routerLink] = "['']">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>POE Tracker</span>
+    <span class="spacer"></span>
+    <button *ngIf="user.length === 0" mat-icon-button [routerLink]="['/login']">
+      <mat-icon>login</mat-icon>
+    </button>
+    <button *ngIf="user.length !== 0" mat-icon-button [routerLink]="['/user/'+user+'/tracked-players']">
+      <mat-icon>account_box</mat-icon>
+    </button>
+  </mat-toolbar>
+  <div [@routeAnimations]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+</div>
+

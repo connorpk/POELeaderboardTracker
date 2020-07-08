@@ -1,0 +1,58 @@
+<mat-form-field appearance="fill">
+    <mat-label>League</mat-label>
+    <mat-select name='league' [(ngModel)]='league' (selectionChange)='getLeaderboard()'>
+        <mat-option *ngFor='let l of leagues' [value]='l'>{{l}}</mat-option>
+    </mat-select>
+</mat-form-field>
+<form class="form-container" [formGroup]="searchForm">
+    <mat-form-field appearance="fill">
+        <mat-label>Account</mat-label>
+        <input formControlName="accountName" matInput type="text" name="accountName" (keyup)="applyFilter()">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Class</mat-label>
+        <input formControlName="className" matInput type="text" name="className" (keyup)="applyFilter()">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Twitch</mat-label>
+        <input formControlName="twitchName" matInput type="text" name="accountName" (keyup)="applyFilter()">
+    </mat-form-field>
+</form>
+<!-- <button mat-raised-button color="primary" (click)='userPage()'>Tracked Accounts</button> -->
+
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="rank">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Rank </th>
+            <td mat-cell *matCellDef="let row"> <span>{{row.rank}} </span> <span *ngIf="row.dead"
+                    style="font-size: 20px;">&#9760;</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="account">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Account </th>
+            <td mat-cell *matCellDef="let row"> {{row.account.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="level">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Level </th>
+            <td mat-cell *matCellDef="let row"> {{row.character.level}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="class">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Class </th>
+            <td mat-cell *matCellDef="let row"> {{row.character.class}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="twitch">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Twitch </th>
+            <td mat-cell *matCellDef="let row"> {{row.account.twitch ? row.account.twitch.name : 'N/A'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="moreInfo(row)"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+</div>

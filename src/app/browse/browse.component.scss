@@ -1,0 +1,42 @@
+table {
+    width: calc(100% - 30px);
+    margin: 15px;
+    text-align: center;
+  }
+  
+.mat-form-field {
+  font-size: 14px;
+  width: calc(25% - 4px);
+  margin: 2px;
+}
+  
+td, th {
+  text-align: left;
+  width: 25%;
+}
+
+.filter{
+  width: 50%;
+}
+
+.mat-row:hover{
+  cursor: pointer;
+  opacity: 50%;
+}
+
+.mat-raised-button{
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.right{
+  float: right;
+}
+
+.form-container{
+  display: inline-block;
+  width: 75%;
+.mat-form-field{
+  width: calc(100%/3 - 4px) !important;
+}
+}

@@ -1,0 +1,10 @@
+<div>Rank: {{account.rank}}</div>
+<div>Account: {{account.account.name}}</div>
+<div>Character: {{account.character.name}}</div>
+<div>Level: {{account.character.level}}</div>
+<div>Experience: {{account.character.experience}}</div>
+<div>Delve Depth Solo: {{account.character.depth? account.character.depth['solo'] : 'N/A'}}</div>
+<div>Delve Depth Overall: {{account.character.depth? account.character.depth['default'] : 'N/A'}}</div>
+<div><a href="https://www.pathofexile.com/account/view-profile/{{account.account.name}}/characters" target="_blank">Link to Profile</a></div>
+<button (click)='trackUser()' mat-raised-button>add user to tracked users</button>
+<a [routerLink]="['']"><button mat-raised-button>back to all accounts</button></a>

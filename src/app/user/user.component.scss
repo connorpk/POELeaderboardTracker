@@ -1,0 +1,23 @@
+table {
+    width: calc(100% - 30px);
+    margin: 15px;
+    text-align: center;
+  }
+  
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+  
+td, th {
+  text-align: left;
+  width: 25%;
+}
+
+.filter{
+  width: 50%;
+}
+
+.mat-row:hover{
+  opacity: 50%;
+}
