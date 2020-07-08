@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
-{path: '', component: BrowseComponent},
+{path: '', component: BrowseComponent, data: {animation: 'stuff'}},
 {path: 'user/:username/tracked-players', component: UserComponent, canActivate: [AuthGuard], data: {animation: "user"} },
 {path: 'player/:playername', component: PlayerComponent, data: {animation: "player"}},
 {path: 'login', component: LoginComponent, data: {animation: "login"}},
