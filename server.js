@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const fetch = require('node-fetch')
 const pool = require('./server/configs/mysql.config');
 const leagues = ['Harvest', 'Hardcore Harvest', 'SSF Harvest', 'SSF Harvest HC'];
+const port = process.env.PORT || 3000;
 
 let leagueIndex = 0;
 let i = 0;
@@ -107,4 +108,4 @@ cron.schedule('*/15 * * * *', () => {
     getLeaderboard();
 })
 
-app.listen(3000);
+app.listen(port);
