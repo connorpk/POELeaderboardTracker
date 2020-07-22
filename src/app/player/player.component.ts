@@ -30,7 +30,6 @@ export class PlayerComponent implements OnInit {
       }
     })
     this.acctStore.byUsername(this.username).subscribe(val => this.account = val[0]);
-    console.log(this.account);
   }
 
 }

@@ -80,7 +80,6 @@ export class BrowseComponent implements OnInit {
     })
     this.acctStore.accts$.subscribe(val => {
       if(val.length ==0)this.getLeaderboard();
-      console.log(val);
       this.dataSource = new MatTableDataSource(val);
       this.dataSource.filterPredicate = (data: Account, filter: string) => {
         let filterValue = JSON.parse(filter);
@@ -100,7 +99,6 @@ export class BrowseComponent implements OnInit {
       }
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      console.log(val);
       this.leagueStore.league$.subscribe(val =>{
         this.league = val;
       })

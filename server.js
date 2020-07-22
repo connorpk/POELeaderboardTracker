@@ -46,7 +46,7 @@ app.get('*', (req, res) => {
 
 function updateTable() {
     pool.query('DELETE FROM poe_leaderboard_data', (err) => {
-        if (err) console.log(err);
+        if (err) throw err;
     })
     pool.query('INSERT INTO poe_leaderboard_data (char_id, rank, dead, char_name, level, char_class, delve_default, delve_solo, acc_name, challenge_complete, twitch_name, total_exp, league) VALUES ?',
         [accounts], (err) => {
@@ -57,7 +57,7 @@ function updateTable() {
 
 function getLeaderboard() {
     setTimeout(() => {
-        fetch(`http://api.pathofexile.com/ladders/${leagues[leagueIndex]}?offset=${i}&limit=100`)
+        fetch(`http://api.pathofexile.com/ladders/${leagues[leagueIndex]}?offset=${i}&limit=200`)
             .then(res => {
                 return res.json()
             })
@@ -74,20 +74,18 @@ function getLeaderboard() {
                     depthCheck.solo, depthCheck.default, acc.account.name, challenges, twitch, acc.character.experience, leagues[leagueIndex]];
                     accounts = [...accounts, newAcc];
                 });
-                console.log(accounts.length);
-
             })
             .then(() => {
-                i += 100
-                if (i < 500) {
+                i += 200
+                if (i < 1000) {
                     getLeaderboard()
                 }
-                else if (leagueIndex < 3 && i === 500) {
+                else if (leagueIndex < 3 && i === 1000) {
                     leagueIndex++;
                     i = 0;
                     getLeaderboard()
                 }
-                else if (leagueIndex = 3 && i === 500) {
+                else if (leagueIndex = 3 && i === 1000) {
                     leagueIndex = 0;
                     i = 0;
                     leaderboardDone = true;
