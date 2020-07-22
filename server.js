@@ -58,7 +58,7 @@ function updateTable() {
 
 function getLeaderboard() {
     setTimeout(() => {
-        fetch(`http://api.pathofexile.com/ladders/${leagues[leagueIndex]}?offset=${i}&limit=200`)
+        fetch(`http://api.pathofexile.com/ladders/${leagues[leagueIndex]}?offset=${i}&limit=100`)
             .then(res => {
                 return res.json()
             })
@@ -77,16 +77,16 @@ function getLeaderboard() {
                 });
             })
             .then(() => {
-                i += 200
-                if (i < 1000) {
+                i += 100
+                if (i < 500) {
                     getLeaderboard()
                 }
-                else if (leagueIndex < 3 && i === 1000) {
+                else if (leagueIndex < 3 && i === 500) {
                     leagueIndex++;
                     i = 0;
                     getLeaderboard()
                 }
-                else if (leagueIndex = 3 && i === 1000) {
+                else if (leagueIndex = 3 && i === 500) {
                     leagueIndex = 0;
                     i = 0;
                     leaderboardDone = true;
