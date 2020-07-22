@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { UserStoreService } from '../services/user-store.service';
+//TODO
 
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
-})
-export class LoginComponent implements OnInit {
+// import { Component, OnInit } from '@angular/core';
+// import { UserStoreService } from '../services/user-store.service';
 
-  username: string;
-  password: string;
+// @Component({
+//   selector: 'app-login',
+//   templateUrl: './login.component.html',
+//   styleUrls: ['./login.component.scss']
+// })
+// export class LoginComponent implements OnInit {
 
-  constructor(private userStore: UserStoreService) { }
+//   username: string;
+//   password: string;
 
-  login(){
-    this.userStore.login(this.username, this.password) 
-  }
+//   constructor(private userStore: UserStoreService) { }
 
-  ngOnInit(): void {
-  }
+//   login(){
+//     this.userStore.login(this.username, this.password) 
+//   }
 
-}
+//   ngOnInit(): void {
+//   }
+
+// }

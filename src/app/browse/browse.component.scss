@@ -13,14 +13,16 @@ table {
 td, th {
   text-align: left;
   width: 25%;
+  height: 24px;
+  font-size: 20px;
 }
 
 .filter{
   width: 50%;
 }
 
-.mat-row:hover{
-  cursor: pointer;
+tr.mat-row:hover{
+  cursor: pointer !important;
   opacity: 50%;
 }
 
@@ -31,6 +33,11 @@ td, th {
 
 .right{
   float: right;
+}
+
+.classimg{
+  height: 44px;
+  margin-top: 2px;
 }
 
 .form-container{

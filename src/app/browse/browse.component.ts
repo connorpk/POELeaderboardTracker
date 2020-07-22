@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AcctStoreService } from '../services/acct-store.service';
 import { AcctService } from '../services/acct.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Account } from '../interfaces/account.interface';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Account } from '../interfaces/account.interface';
+import { LeagueStoreService } from '../services/league-store.service';
+import { LeagueService } from '../services/league.service';
 
 @Component({
   selector: 'app-browse',
@@ -19,6 +21,7 @@ export class BrowseComponent implements OnInit {
   leagues: string[] = ['Harvest', 'Hardcore Harvest', 'SSF Harvest', 'SSF Harvest HC']
   displayedColumns: string[] = ['rank', 'account', 'level', 'class', 'twitch'];
   dataSource: MatTableDataSource<Account>;
+  league: string;
 
   searchForm: FormGroup;
 
@@ -26,82 +29,82 @@ export class BrowseComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  defaultLeague: string = 'Harvest'
 
 
-  league: string = this.defaultLeague;
-  
 
   constructor(private acctStore: AcctStoreService,
-     private acctService: AcctService,
-      private router: Router,
-      private fb: FormBuilder) { }
+    private acctService: AcctService,
+    private router: Router,
+    private fb: FormBuilder,
+    private leagueStore: LeagueStoreService,
+    private leagueService: LeagueService) { }
 
 
-  moreInfo(acc: Account){
-    this.router.navigateByUrl(`player/${acc.character.name}`);
+  moreInfo(acc: Account) {
+    this.router.navigateByUrl(`player/${acc.characterName}`);
   }
 
-  userPage(){
+  userPage() {
     this.router.navigateByUrl('/user/a/tracked-players');
   }
 
-  getLeaderboard(){
-    this.acctService.leaderboard(this.league);
+  getLeaderboard() {
+    this.acctService.leaderboard();
   }
 
-  get accountName(){
+  setLeague(league:string){
+    this.leagueService.setLeague(league);
+  }
+
+  get accountName() {
     return this.searchForm.get('accountName').value.toLowerCase().trim()
   }
-  
-  get className(){
+
+  get className() {
     return this.searchForm.get('className').value.toLowerCase().trim()
   }
 
-  get twitchName(){
+  get twitchName() {
     return this.searchForm.get('twitchName').value.toLowerCase().trim()
   }
 
-
-  applyFilter(){
+  applyFilter() {
     this.dataSource.filter = JSON.stringify([this.accountName, this.className, this.twitchName])
   }
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
-      accountName:['', Validators.compose([Validators.minLength(3), Validators.maxLength(144)])],
-      className:['', Validators.compose([Validators.minLength(3), Validators.maxLength(144)])],
-      twitchName:['', Validators.compose([Validators.minLength(3), Validators.maxLength(144)])]
+      accountName: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(144)])],
+      className: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(144)])],
+      twitchName: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(144)])]
     })
-    this.getLeaderboard();
     this.acctStore.accts$.subscribe(val => {
-      this.dataSource = new MatTableDataSource(val.accounts);
-      this.dataSource.filterPredicate = (data: Account, filter: string) =>{
+      if(val.length ==0)this.getLeaderboard();
+      console.log(val);
+      this.dataSource = new MatTableDataSource(val);
+      this.dataSource.filterPredicate = (data: Account, filter: string) => {
         let filterValue = JSON.parse(filter);
-        console.log(filterValue)
-        if(filterValue[2] === ''){
-          return data.account.name.toLowerCase().includes(filterValue[0]) && 
-          data.character.class.toLowerCase().includes(filterValue[1])
-        }
-        else{
-          return data.account.name.includes(filterValue[0]) && 
-          data.character.class.includes(filterValue[1]) &&
-          data.account.twitch &&
-          data.account.twitch.name.includes(filterValue[2])
-        }
+        return data.league == this.league &&
+          data.accountName.toLowerCase().includes(filterValue[0]) &&
+          data.class.toLowerCase().includes(filterValue[1]) &&
+          data.twitchName.toLowerCase().includes(filterValue[2])
       }
-      this.dataSource.sortingDataAccessor = (val, hRow) =>{
-        switch(hRow){
+      this.dataSource.sortingDataAccessor = (val, hRow) => {
+        switch (hRow) {
           case 'rank': return val.rank;
-          case 'account': return val.account.name;
-          case 'level': return val.character.level;
-          case 'class': return val.character.class;
-          case 'twitch': return val.account.twitch ? val.account.twitch.name : 'zzzzzzzz';
+          case 'account': return val.accountName;
+          case 'level': return val.level;
+          case 'class': return val.class;
+          case 'twitch': return val.twitchName == 'N/A' ? 'zzzzzzz' : val.twitchName;
         }
       }
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       console.log(val);
+      this.leagueStore.league$.subscribe(val =>{
+        this.league = val;
+      })
+      this.applyFilter();
     })
   }
 

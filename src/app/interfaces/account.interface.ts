@@ -1,10 +1,15 @@
-import { Character } from './character.interace';
-import { AccountInfo } from './accountInfo.interface';
-
 export interface Account{
+    characterID: string;
     rank: number;
     dead: boolean;
-    online: boolean;
-    character: Character;
-    account: AccountInfo;
+    characterName: string;
+    level: number;
+    class: string;
+    delveDefault: number;
+    delveSolo: number;
+    accountName: string;
+    challenges: number;
+    twitchName: string;
+    totalEXP: number;
+    league: string;
 }

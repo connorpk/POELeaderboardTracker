@@ -1,10 +1,17 @@
-<div>Rank: {{account.rank}}</div>
-<div>Account: {{account.account.name}}</div>
-<div>Character: {{account.character.name}}</div>
-<div>Level: {{account.character.level}}</div>
-<div>Experience: {{account.character.experience}}</div>
-<div>Delve Depth Solo: {{account.character.depth? account.character.depth['solo'] : 'N/A'}}</div>
-<div>Delve Depth Overall: {{account.character.depth? account.character.depth['default'] : 'N/A'}}</div>
-<div><a href="https://www.pathofexile.com/account/view-profile/{{account.account.name}}/characters" target="_blank">Link to Profile</a></div>
-<button (click)='trackUser()' mat-raised-button>add user to tracked users</button>
-<a [routerLink]="['']"><button mat-raised-button>back to all accounts</button></a>
+<mat-card *ngIf="account" [ngClass]="{'dead': account.dead}">
+    <mat-card-header>
+      <div mat-card-avatar class="avatarDiv"><img class="classAvatar" src="../../assets/ClassImages/{{account.class}}_avatar.png" alt="class image"></div>
+      <mat-card-title><span *ngIf="account.dead"><i class="fas fa-skull-crossbones"></i></span>Rank {{account.rank}} {{account.league}} Level {{account.level}}</mat-card-title>
+      <mat-card-title>{{account.characterName}}</mat-card-title>
+      <mat-card-subtitle>{{account.accountName}}  <a href="https://www.twitch.tv/{{account.twitchName}}" target="_blank" *ngIf="account.twitchName != 'N/A'"><i class="fab fa-twitch fa-lg"></i></a></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div>Total Experience - {{account.totalEXP}}</div>
+        <div>Delve: Solo - {{account.delveSolo}} Default - {{account.delveDefault}}</div>
+        <div>Challenges Completed - {{account.challenges}}</div>
+    </mat-card-content>
+    <mat-card-actions>
+        <a href="https://www.pathofexile.com/account/view-profile/{{account.accountName}}/characters" target="_blank"><button mat-raised-button color='primary'>Link to Profile</button></a>
+        <a [routerLink]="['']"><button mat-raised-button color="warn">back to all accounts</button></a>
+    </mat-card-actions>
+  </mat-card>

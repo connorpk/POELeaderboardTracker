@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AcctStoreService } from '../services/acct-store.service';
 import { Account } from '../interfaces/account.interface';
-import { UserStoreService } from '../services/user-store.service';
+import { AcctService } from '../services/acct.service';
+// import { UserStoreService } from '../services/user-store.service';
 
 @Component({
   selector: 'app-player',
@@ -15,14 +16,19 @@ export class PlayerComponent implements OnInit {
   account: Account;
 
   constructor(private actr: ActivatedRoute, private acctStore: AcctStoreService,
-     private userStore: UserStoreService, private router: Router) { }
+              private router: Router, private acctService: AcctService) { }
 
-  trackUser(){
-    this.userStore.addTrackedAccount(this.account);
-  }
+  // trackUser(){
+  //   this.userStore.addTrackedAccount(this.account);
+  // }
 
   ngOnInit(): void {
     this.username = this.actr.snapshot.params.playername;
+    this.acctStore.accts$.subscribe(val =>{
+      if(val.length == 0){
+        this.acctService.leaderboard();
+      }
+    })
     this.acctStore.byUsername(this.username).subscribe(val => this.account = val[0]);
     console.log(this.account);
   }

@@ -1,69 +1,71 @@
-import { Injectable } from '@angular/core';
-import { Account } from '../interfaces/account.interface'
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+//TODO
 
-@Injectable({
-  providedIn: 'root'
-})
-export class UserStoreService {
+// import { Injectable } from '@angular/core';
+// import { Account } from '../interfaces/account.interface'
+// import { Router } from '@angular/router';
+// import { BehaviorSubject, Observable } from 'rxjs';
 
-  trackedAccountsInit: Array<Account> = [];
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class UserStoreService {
 
-  constructor(private router: Router) { }
+//   trackedAccountsInit: Array<Account> = [];
 
-  private readonly _user = new BehaviorSubject<string>('');
-  readonly user$: Observable<string> = this._user.asObservable();
-  private readonly _trackedAccounts = new BehaviorSubject<Array<Account>>(this.trackedAccountsInit);
-  readonly trackedAccounts$: Observable<Array<Account>> = this._trackedAccounts.asObservable();
+//   constructor(private router: Router) { }
 
-  private get user(){
-    return this._user.getValue();
-  }
+//   private readonly _user = new BehaviorSubject<string>('');
+//   readonly user$: Observable<string> = this._user.asObservable();
+//   private readonly _trackedAccounts = new BehaviorSubject<Array<Account>>(this.trackedAccountsInit);
+//   readonly trackedAccounts$: Observable<Array<Account>> = this._trackedAccounts.asObservable();
 
-  private set user(username: string){
-    this._user.next(username);
-  }
+//   private get user(){
+//     return this._user.getValue();
+//   }
 
-  private get trackedAccounts(){
-    return this._trackedAccounts.getValue();
-  }
+//   private set user(username: string){
+//     this._user.next(username);
+//   }
 
-  private set trackedAccounts(accts: Array<Account>){
-    this._trackedAccounts.next(accts);
-  }
+//   private get trackedAccounts(){
+//     return this._trackedAccounts.getValue();
+//   }
 
-  logout(){
-    this.user = '';
-    this.router.navigate(['/login'])
-  }
+//   private set trackedAccounts(accts: Array<Account>){
+//     this._trackedAccounts.next(accts);
+//   }
 
-  login(uname: string, pwd: string){
-    if(uname && pwd){
-      this.user = uname;
-      this.router.navigate(['']);
-    }
-  }
+//   logout(){
+//     this.user = '';
+//     this.router.navigate(['/login'])
+//   }
 
-  addTrackedAccount(acct: Account){
-    let found = false;
-    for(var i = 0; i < this.trackedAccounts.length; i++){
-      if(this.trackedAccounts[i].account.name === acct.account.name)
-      {
-        found = true;
-        break;
-      }
-    }
+//   login(uname: string, pwd: string){
+//     if(uname && pwd){
+//       this.user = uname;
+//       this.router.navigate(['']);
+//     }
+//   }
 
-    if(!found){
-      this.trackedAccounts = [...this.trackedAccounts, acct];
-    }
+//   addTrackedAccount(acct: Account){
+//     let found = false;
+//     for(var i = 0; i < this.trackedAccounts.length; i++){
+//       if(this.trackedAccounts[i].account.name === acct.account.name)
+//       {
+//         found = true;
+//         break;
+//       }
+//     }
 
-    console.log(this.trackedAccounts);
-  }
+//     if(!found){
+//       this.trackedAccounts = [...this.trackedAccounts, acct];
+//     }
 
-  removeTrackedAccount(acct: Account){
-    this.trackedAccounts = this.trackedAccounts.filter(a => a.account.name !== acct.account.name);
-  }
+//     console.log(this.trackedAccounts);
+//   }
 
-}
+//   removeTrackedAccount(acct: Account){
+//     this.trackedAccounts = this.trackedAccounts.filter(a => a.account.name !== acct.account.name);
+//   }
+
+// }
